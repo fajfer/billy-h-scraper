@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  billy-h-scraper:
+    container_name: billy-h-scraper
+    image: fajfer/billy-h-scraper:latest
+    restart: always
+    environment: # example
+      - WEB_URL=https://wp.pl
+      - GROUPS=@wp_pl,10101010,@global_news
+      - BOT_TOKEN=000000:AAAAAABBBBBBCCCCCCC
+      - MSG_DELAY=60
+    volumes:
+      - ./history:/app/history
