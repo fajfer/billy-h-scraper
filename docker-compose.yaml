@@ -3,6 +3,7 @@ services:
   billy-h-scraper:
     container_name: billy-h-scraper
     image: fajfer/billy-h-scraper:latest
+    build: .
     restart: always
     environment: # example
       - WEB_URL=https://wp.pl
