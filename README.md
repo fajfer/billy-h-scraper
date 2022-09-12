@@ -41,6 +41,14 @@ Możemy też utrzymywać konfigurację w wygodnym YAMLu i postawić kontener jed
 docker-compose up -d
 ```
 
+### Zbudowanie obrazu i uruchomienie kontenera za jednym zamachem
+
+Można też zbudować obraz projektu i go uruchomić jednym poleceniem, dzięki docker-compose
+
+```console
+docker compose up -d --build
+```
+
 ## Wyjaśnienie użytych zmiennych ##
 
 ### Required variable combinations ###
