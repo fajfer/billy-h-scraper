@@ -34,7 +34,7 @@ def scraper_monitor(context: CallbackContext) -> None:
 updater = Updater(token=environ["BOT_TOKEN"], use_context=True)
 
 job_queue = updater.job_queue
-job_queue.run_repeating(scraper_monitor, environ["MSG_DELAY"])
+job_queue.run_repeating(scraper_monitor, int(environ["MSG_DELAY"]))
 
 updater.start_polling()
 updater.idle()
