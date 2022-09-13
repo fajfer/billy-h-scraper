@@ -1,13 +1,14 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
-from requests import get
+from os import environ
+from time import sleep
+
 from bs4 import BeautifulSoup
 from loguru import logger
-from time import sleep
+from requests import get
+from telegram.ext import CallbackContext, Updater
 
 
 def scraper_monitor(context: CallbackContext) -> None:
-    resp = get(os.environ["WEB_URL"])
+    resp = get(environ["WEB_URL"])
     soup = BeautifulSoup(resp.text, "html.parser")
     raw_messages = soup.find_all("div", {"class": "listaditem"})[::-1]
     for message in raw_messages:
@@ -25,15 +26,15 @@ def scraper_monitor(context: CallbackContext) -> None:
         if int(msg_id) > int(old_msg_id):
             with open("history", "w") as histfile:
                 histfile.write(msg_id)
-                for group in os.environ["GROUPS"].split(","):
+                for group in environ["GROUPS"].split(","):
                     context.bot.send_message(group, f"{user}: {msg_content}")
                 sleep(2)
 
 
-updater = Updater(token=os.environ["BOT_TOKEN"], use_context=True)
+updater = Updater(token=environ["BOT_TOKEN"], use_context=True)
 
 job_queue = updater.job_queue
-job_queue.run_repeating(scraper_monitor, os.environ["MSG_DELAY"])
+job_queue.run_repeating(scraper_monitor, int(environ["MSG_DELAY"]))
 
 updater.start_polling()
 updater.idle()
