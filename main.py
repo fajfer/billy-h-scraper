@@ -60,7 +60,7 @@ def parse_update(raw_update: Any) -> Update:
     user = raw_update.find("i", {"class": "icon-user"}).next.strip()
     content = raw_update.find("div", {"class": "adcontent"}).next.strip()
     logger.info(f"[{id}] {user}: {content}")
-    return Update(int(id), content, user)
+    return Update(int(id), user, content)
 
 
 def select_new_updates(updates: list[Update], latest_id: int) -> list[Update]:
