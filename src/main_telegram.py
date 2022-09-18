@@ -4,7 +4,7 @@ from time import sleep
 from telegram.ext import CallbackContext, Updater
 
 from history import get_latest_id, store_latest_id
-from updates import Update, get_updates, select_new_updates
+from updates import get_updates, select_new_updates
 
 BOT_TOKEN = environ["BOT_TOKEN"]
 MSG_DELAY = int(environ["MSG_DELAY"])
@@ -24,12 +24,12 @@ def scraper_monitor(context: CallbackContext) -> None:
     new_updates = select_new_updates(updates, get_latest_id())
     for update in new_updates:
         store_latest_id(update.id)
-        send_update(context, update)
+        send_update(context, update.user, update.content)
 
 
-def send_update(context: CallbackContext, update: Update) -> None:
+def send_update(context: CallbackContext, user: str, content: str) -> None:
     for group in GROUPS:
-        context.bot.send_message(group, f"{update.user}: {update.content}")
+        context.bot.send_message(group, f"{user}: {content}")
     sleep(FLOOD_PREVENTION_DELAY_SECONDS)  # Dirty anti-flood prevention
 
 
