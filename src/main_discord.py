@@ -1,6 +1,7 @@
 from os import environ
-from requests import post
 from time import sleep
+
+from requests import post
 
 from scraper_monitor import scraper_monitor
 
