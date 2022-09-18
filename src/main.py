@@ -41,6 +41,7 @@ def send_update(user: str, content: str) -> None:
         send_update_telegram(user, content)
     if WEBHOOK_URL:
         send_update_discord(user, content)
+    sleep(FLOOD_PREVENTION_DELAY_SECONDS)  # Dirty flood prevention
 
 
 def send_update_telegram(user: str, content: str) -> None:
