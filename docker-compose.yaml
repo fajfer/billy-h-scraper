@@ -7,10 +7,13 @@ services:
     restart: always
     container_name: billy-h-scraper
     environment: # example
+      # Mandatory variables for both Telegram and Discord
       - MSG_DELAY=60
       - WEB_URL=https://wp.pl
+      # Telegram variables
       - GROUPS=@wp_pl,10101010,@global_news
       - BOT_TOKEN=000000:AAAAAABBBBBBCCCCCCC
+      # Discord variables
       - WEBHOOK_URL=https://discord.com/api/webhooks/.../...
       # - AVATAR_URL=  # Optional webhook avatar URL
     volumes:
