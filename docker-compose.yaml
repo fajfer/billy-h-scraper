@@ -9,6 +9,8 @@ services:
   billy-h-scraper-telegram:
     <<: *common-params
     container_name: billy-h-scraper-telegram
+    profiles:
+      - telegram
     environment: # example
       - WEB_URL=https://wp.pl
       - GROUPS=@wp_pl,10101010,@global_news
@@ -19,6 +21,8 @@ services:
   billy-h-scraper-discord:
     <<: *common-params
     container_name: billy-h-scraper-discord
+    profiles:
+      - discord
     environment: # example
       - WEB_URL=https://wp.pl
       - WEBHOOK_URL=https://discord.com/api/webhooks/.../...
