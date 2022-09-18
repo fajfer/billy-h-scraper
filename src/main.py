@@ -15,9 +15,9 @@ BOT_TOKEN = environ.get("BOT_TOKEN")
 GROUPS = environ.get("GROUPS")
 VALID_TELEGRAM_CONFIG = BOT_TOKEN and GROUPS
 
-WEBBOOK_URL = environ.get("WEBHOOK_URL")
+WEBHOOK_URL = environ.get("WEBHOOK_URL")
 AVATAR_URL = environ.get("AVATAR_URL")
-VALID_DISCORD_CONFIG = WEBBOOK_URL is not None
+VALID_DISCORD_CONFIG = WEBHOOK_URL is not None
 
 
 def main() -> None:
@@ -39,7 +39,7 @@ def scraper_monitor() -> None:
 def send_update(user: str, content: str) -> None:
     if BOT_TOKEN and GROUPS:
         send_update_telegram(user, content)
-    if WEBBOOK_URL:
+    if WEBHOOK_URL:
         send_update_discord(user, content)
 
 
@@ -50,7 +50,7 @@ def send_update_telegram(user: str, content: str) -> None:
 
 def send_update_discord(user: str, content: str) -> None:
     data = {"content": content, "username": user, "avatar_url": AVATAR_URL}
-    post(WEBBOOK_URL, data)
+    post(WEBHOOK_URL, data)
 
 
 if __name__ == "__main__":
