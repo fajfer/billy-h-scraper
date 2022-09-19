@@ -58,7 +58,7 @@ docker compose up -d --build
 Scraper będzie wysyłał aktualizacje poprzez Telegrama i/lub Discorda jeżeli ich zmienne zostaną dostarczone.
 Jeżeli oba zestawy zmiennych zostaną dostarczone aktualizacje będą wysyłane i tu i tu.
 
-Zmienne mogą zostać dostarczone przez `docker-compose.yaml`
+Zmienne mogą zostać dostarczone przez `docker-compose.yaml`.
 Domyślny plik zawiera przykładowy zestaw zmiennych.
 
 ### Wymagane zmienne ###
