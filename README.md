@@ -9,12 +9,16 @@
 - [Dockera](https://docs.docker.com/get-docker/), lub po prostu działającego pythona na naszej maszynie
 - [docker-compose](https://docs.docker.com/compose/install/)
 - [Bota](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-telegram?view=azure-bot-service-4.0) na Telegramie (potrzebujemy jego token)
+- [Webhook](https://discord.com/developers/docs/resources/webhook) na kanale Discordowym (potrzebujemy jego URL)
+
+Scraper może wysyłać aktualizacje przez Telegrama, Discorda, lub i tu i tu.
 
 ## Uruchomienie dockera ##
 
 ### Budowanie projektu  ###
 
 Zbudowanie projektu polega na uruchomieniu polecenia
+
 ```console
 docker build --network=host -t fajfer/billy-h-scraper:latest .
 ```
@@ -51,11 +55,33 @@ docker compose up -d --build
 
 ## Wyjaśnienie użytych zmiennych ##
 
-### Required variable combinations ###
+Scraper będzie wysyłał aktualizacje poprzez Telegrama i/lub Discorda jeżeli ich zmienne zostaną dostarczone.
+Jeżeli oba zestawy zmiennych zostaną dostarczone aktualizacje będą wysyłane i tu i tu.
+
+Zmienne mogą zostać dostarczone przez `docker-compose.yaml`
+Domyślny plik zawiera przykładowy zestaw zmiennych.
+
+### Wymagane zmienne ###
+
+Te zmienne są wymagane niezależnie od tego, czy aktualizacje mają być wysyłane przez Discorda lub Telegrama.
 
 | Nazwa          | Przykład  |  Zastosowanie  |
 |----------------|-----------|----------------|
 | `WEB_URL`      | https://www.wp.pl          | Adres URL wybranego shoutboxa |
+| `MSG_DELAY`    | 60                         | Zmianna odpowiadająca liczbie sekund zanim zostanie odpytany endpoint `WEB_URL` |
+
+### Zmienne dotyczące Telegrama ###
+
+| Nazwa          | Przykład  |  Zastosowanie  |
+|----------------|-----------|----------------|
 | `GROUPS`       | @wp_pl,@onet_pl            | ID grup na telegramie oddzielonych przecinkami |
 | `BOT_TOKEN`    | 000000:AAAAAABBBBBBCCCCCCC | Token, jaki otrzymaliśmy od BotFathera na Telegramie |
-| `MSG_DELAY`    | 60                         | Zmianna odpowiadająca liczbie sekund zanim zostanie odpytany endpoint `SHOUTBOX_URL` |
+
+### Zmienne dotyczące Discorda ###
+
+| Nazwa          | Przykład  |  Zastosowanie                      |
+|----------------|-----------|------------------------------------|
+| `WEBHOOKS`     | https://discord.com/api/webhooks/111/AA-BBB-CC | URL Webhooków, można przekazać kila rozdzielonych przecinkami |
+| `AVATAR_URL`   | https://shorturl.at/HOVW3                      | Opcjonalny URL do awatara postów |
+
+`AVATAR_URL` jest parametrem opcjonalnym, bez niego aktualizacje będą miały domyślny awatar Webhooka.
