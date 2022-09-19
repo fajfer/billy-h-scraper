@@ -37,9 +37,9 @@ def scraper_monitor() -> None:
 
 
 def send_update(user: str, content: str) -> None:
-    if BOT_TOKEN and GROUPS:
+    if VALID_TELEGRAM_CONFIG:
         send_update_telegram(user, content)
-    if WEBHOOK_URL:
+    if VALID_DISCORD_CONFIG:
         send_update_discord(user, content)
     sleep(FLOOD_PREVENTION_DELAY_SECONDS)  # Dirty flood prevention
 
