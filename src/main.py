@@ -50,9 +50,13 @@ def send_update_telegram(user: str, content: str) -> None:
 
 
 def send_update_discord(user: str, content: str) -> None:
-    for webhook in WEBHOOKS.split(","):
-        data = {"content": content, "username": user, "avatar_url": AVATAR_URL}
-        post(webhook, data)
+    for webhook_url in WEBHOOKS.split(","):
+        update_payload = {
+            "content": content,
+            "username": user,
+            "avatar_url": AVATAR_URL,
+        }
+        post(webhook_url, json=update_payload)
 
 
 if __name__ == "__main__":
