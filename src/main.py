@@ -10,14 +10,14 @@ from updates import get_updates, select_new_updates
 MSG_DELAY = int(environ["MSG_DELAY"])
 FLOOD_PREVENTION_DELAY_SECONDS = 2
 
-TELEGRAM_API_URL = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
+TELEGRAM_API = "https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
 BOT_TOKEN = environ.get("BOT_TOKEN")
 GROUPS = environ.get("GROUPS")
 VALID_TELEGRAM_CONFIG = BOT_TOKEN and GROUPS
 
-WEBHOOK_URL = environ.get("WEBHOOK_URL")
+WEBHOOKS = environ.get("WEBHOOKS")
 AVATAR_URL = environ.get("AVATAR_URL")
-VALID_DISCORD_CONFIG = WEBHOOK_URL is not None
+VALID_DISCORD_CONFIG = WEBHOOKS is not None
 
 
 def main() -> None:
@@ -46,12 +46,13 @@ def send_update(user: str, content: str) -> None:
 
 def send_update_telegram(user: str, content: str) -> None:
     for group in GROUPS.split(","):
-        get(TELEGRAM_API_URL.format(BOT_TOKEN, group, f"{user}: {content}"))
+        get(TELEGRAM_API.format(BOT_TOKEN, group, f"{user}: {content}"))
 
 
 def send_update_discord(user: str, content: str) -> None:
-    data = {"content": content, "username": user, "avatar_url": AVATAR_URL}
-    post(WEBHOOK_URL, data)
+    for webhook in WEBHOOKS.split(","):
+        data = {"content": content, "username": user, "avatar_url": AVATAR_URL}
+        post(webhook, data)
 
 
 if __name__ == "__main__":
