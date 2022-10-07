@@ -5,7 +5,7 @@ services:
     container_name: billy-h-scraper
     image: fajfer/billy-h-scraper:latest
     build: .
-    restart: always
+    restart: unless-stopped
     environment: # example
       # Mandatory variables for both Telegram and Discord
       - MSG_DELAY=60
