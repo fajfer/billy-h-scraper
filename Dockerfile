@@ -2,7 +2,8 @@ FROM python:3.9.13-alpine
 
 WORKDIR /app
 
-RUN pip install python-telegram-bot requests loguru bs4
+RUN pip install bs4 loguru requests
 
-COPY main.py .
-CMD ["python3", "main.py"]
+COPY src ./src
+
+CMD ["python3", "src/main.py"]
